@@ -81,14 +81,14 @@ int getIndex(Htable *ht, int *value, int index){
 
 
     while (return_node->next!=NULL){
-        if ((return_node->indexs > index) & (*value ==return_node->key)){
+        if ((*value ==return_node->key)){
             re_ind=return_node->indexs;
             return re_ind;
         }
         return_node=return_node->next;        
     }
 
-    if ((return_node->indexs > index) & (*value ==return_node->key)){
+    if ((*value ==return_node->key)){
             re_ind=return_node->indexs;
             return re_ind;
     }    
@@ -98,29 +98,33 @@ int getIndex(Htable *ht, int *value, int index){
 
 void main(){
     // int nums[]={0,3,-3,4,-1};
-    int nums[]={10,13,-3,-4};
-    int size = sizeof(nums)/sizeof(nums[0]);
     // int target = -1;
+    int nums[]={10,13,-3,-4};
     int target = 9;
+    int size = sizeof(nums)/sizeof(nums[0]);
+    int res[2];
 
     Htable *ht = create();
     for (int i=0; i<size; i++){
-        insert(ht,&nums[i],&i);
-        // printf("value is %2d,index is %2d\n",ht->nodes[hash(&nums[i])]->key,ht->nodes[hash(&nums[i])]->indexs);
-        // printf("value is %2d,index is %2d\n",ht->nodes[hash(&nums[2])]->next->key,ht->nodes[hash(&nums[2])]->next->indexs);
-    }
-
-    int res[2];
-    // printf("value is %d,index is %d\n",nums[0],*(getIndex(ht,&nums[0],2)));
-    for (int i=0; i<size; i++){
         int search_value = target-nums[i];
         int re_ind = getIndex(ht,&search_value,i);
-        if (re_ind!=-1){
-            res[0]=i;
-            res[1]=re_ind;
+        
+        if (re_ind!=-1)
+        {
+            res[1]=i;
+            res[0]=re_ind;
             printf("first  idx is %2d\nsecond idx is %2d\n",res[0],res[1]);    
             return;
+        } 
+        else
+        {
+            insert(ht,&nums[i],&i);
         }
     }
+    // for (int i=0; i<size; i++){
+    //     printf("value is %2d,index is %2d\n",ht->nodes[hash(&nums[i])]->key,ht->nodes[hash(&nums[i])]->indexs);
+    // }
+    // printf("value is %2d,index is %2d\n",ht->nodes[hash(&nums[2])]->next->key,ht->nodes[hash(&nums[2])]->next->indexs);
+
     printf("can't find any matches\n");    
 }
