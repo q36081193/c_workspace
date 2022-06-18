@@ -96,16 +96,14 @@ int getIndex(Htable *ht, int *value, int index){
     return re_ind;
 }
 
-void main(){
-    // int nums[]={0,3,-3,4,-1};
-    // int target = -1;
-    int nums[]={10,13,-3,-4};
-    int target = 9;
-    int size = sizeof(nums)/sizeof(nums[0]);
-    int res[2];
+
+int* twoSum(int* nums, int numsSize, int target, int* returnSize){
+
+    *returnSize=2;
+    int *res=(int*)malloc(2*sizeof(int));
 
     Htable *ht = create();
-    for (int i=0; i<size; i++){
+    for (int i=0; i<numsSize; i++){
         int search_value = target-nums[i];
         int re_ind = getIndex(ht,&search_value,i);
         
@@ -113,8 +111,7 @@ void main(){
         {
             res[1]=i;
             res[0]=re_ind;
-            printf("first  idx is %2d\nsecond idx is %2d\n",res[0],res[1]);    
-            return;
+            return res;
         } 
         else
         {
@@ -127,4 +124,24 @@ void main(){
     // printf("value is %2d,index is %2d\n",ht->nodes[hash(&nums[2])]->next->key,ht->nodes[hash(&nums[2])]->next->indexs);
 
     printf("can't find any matches\n");    
+    *returnSize=0;
+    return NULL;
+}
+
+
+void main(){
+    int nums[]={0,3,-3,4,-1};
+    int target = -1;
+    // int nums[]={10,13,-3,-4};
+    // int target = 9;
+    int size = sizeof(nums)/sizeof(nums[0]);
+    int rs;
+    int* res = twoSum (nums,size,target, &rs);
+    
+    for (size_t i = 0; i < rs; i++)
+    {
+        printf("match idx is %2d\n",res[i]);    
+    }
+    
+    
 }
